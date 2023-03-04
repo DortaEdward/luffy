@@ -15,6 +15,7 @@ const Home: NextPage = () => {
       </Head>
       <main className="flex items-center flex-col">
       <SpotCard />
+      <button onClick={() => signIn()}>Sign In</button>
       </main>
     </>
   );

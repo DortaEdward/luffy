@@ -9,15 +9,15 @@ const Container: React.FC<Props> = ({ children }) => {
   return (
     <div className="min-w-screen relative h-full min-h-screen bg-neutral-800">
       {children}
-      <div className="absolute bottom-0 bg-neutral-900 flex w-full items-center justify-center py-4 px-2">
-        {router.route !== "/upload" ? (
-          <Link href={'/upload'}>
+      {router.route !== "/upload" ? (
+        <div className="absolute bottom-0 flex w-full items-center justify-center bg-neutral-900 py-4 px-2">
+          <Link href={"/upload"}>
             <FiPlusCircle size={34} className=" text-gray-200" />
           </Link>
-        ) : (
-          <></>
-        )}
-      </div>
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

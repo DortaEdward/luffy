@@ -1,10 +1,16 @@
 import img from "../img.jpg";
 import Image from "next/image";
-import { FiHeart, FiMessageSquare, FiSend, FiBookmark, FiMoreHorizontal } from "react-icons/fi";
+import {
+  FiHeart,
+  FiMessageSquare,
+  FiSend,
+  FiBookmark,
+  FiMoreHorizontal,
+} from "react-icons/fi";
 const SpotCard = () => {
   return (
-    <div className="w-[360px] shadow-2xl p-2 rounded-md bg-gray-400 bg-clip-padding backdrop-filter bg-opacity-10">
-      <div className="my-2 flex items-center justify-between text-gray-200">
+    <div className="w-[360px] rounded-md bg-gray-400 bg-opacity-10 bg-clip-padding p-2 text-gray-200 shadow-2xl backdrop-filter">
+      <div className="my-2 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Image
             src={img}
@@ -19,7 +25,7 @@ const SpotCard = () => {
           </div>
         </div>
         <div>
-          <FiHeart size={32} className="stroke-2" />
+          <FiHeart size={28} className="stroke-2" />
         </div>
       </div>
       <div className="mx-auto w-[340px]">
@@ -29,7 +35,7 @@ const SpotCard = () => {
           className="h-full w-full object-cover"
         />
       </div>
-      <div className=" text-gray-200 my-2 flex items-center justify-between">
+      <div className="my-2 flex items-center justify-between">
         <div className="flex gap-4">
           <div className="flex items-center gap-1">
             <p className="font-light">52</p>
@@ -46,11 +52,14 @@ const SpotCard = () => {
           <FiMoreHorizontal size={24} />
         </div>
       </div>
-      <div>
+      <div className="flex flex-col gap-1">
         <p className="leading-[1.4] text-gray-300">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis harum temporibus corporis veritatis laborum atque aspernatur nihil porro.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis
+          harum temporibus corporis veritatis laborum atque aspernatur nihil
+          porro.
         </p>
-        </div>
+        <p>Location</p>
+      </div>
     </div>
   );
 };

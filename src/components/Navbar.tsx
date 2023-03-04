@@ -1,6 +1,7 @@
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { FiMenu } from "react-icons/fi";
+import Link from "next/link";
 const Navbar = () => {
   const { data: session } = useSession();
   return (
@@ -8,7 +9,9 @@ const Navbar = () => {
       <div className="flex h-full w-full items-center justify-between sm:hidden">
         <div className="flex gap-2">
           <FiMenu size={28} className="cursor-pointer text-gray-200" />
-          <div className="text-2xl text-gray-200">Recur</div>
+          <Link href={"/"}>
+            <div className="text-2xl text-gray-200">Recur</div>
+          </Link>
         </div>
         {session && (
           <Image
