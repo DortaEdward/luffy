@@ -53,10 +53,12 @@ model VerificationToken {
 }
 
 model Spot {
-  id          String @id @default(cuid())
+  id          String  @id @default(cuid())
   title       String
   description String
   image_url   String
+  location    String
+  cords       String?
 
   author   User?   @relation(fields: [authorId], references: [id])
   authorId String?

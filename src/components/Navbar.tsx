@@ -5,13 +5,20 @@ const Navbar = () => {
   const { data: session } = useSession();
   return (
     <div className="sticky top-0 z-50 p-4">
-      {/* Mobile */}
-      <div className="flex items-center justify-between h-full w-full sm:hidden">
-        <div className="text-2xl text-gray-200">Recur</div>
+      <div className="flex h-full w-full items-center justify-between sm:hidden">
         <div className="flex gap-2">
-          {session && <Image className="rounded-full" width={28} height={28} src={session.user?.image as string} alt={`Image of ${session.user?.name}`}/>}
-          <FiMenu size={28} className="text-gray-200 cursor-pointer"/>
+          <FiMenu size={28} className="cursor-pointer text-gray-200" />
+          <div className="text-2xl text-gray-200">Recur</div>
         </div>
+        {session && (
+          <Image
+            className="rounded-full"
+            width={28}
+            height={28}
+            src={session.user?.image as string}
+            alt={`Image of ${session.user?.name}`}
+          />
+        )}
       </div>
     </div>
   );
