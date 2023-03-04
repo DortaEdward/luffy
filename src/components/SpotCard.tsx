@@ -3,7 +3,7 @@ import Image from "next/image";
 import { FiHeart, FiMessageSquare, FiSend, FiBookmark, FiMoreHorizontal } from "react-icons/fi";
 const SpotCard = () => {
   return (
-    <div className="w-[360px]">
+    <div className="w-[360px] shadow-2xl p-2 rounded-md bg-gray-400 bg-clip-padding backdrop-filter bg-opacity-10">
       <div className="my-2 flex items-center justify-between text-gray-200">
         <div className="flex items-center gap-2">
           <Image
@@ -22,7 +22,7 @@ const SpotCard = () => {
           <FiHeart size={32} className="stroke-2" />
         </div>
       </div>
-      <div className="mx-auto w-[360px]">
+      <div className="mx-auto w-[340px]">
         <Image
           src={img}
           alt={"picture of the city"}
