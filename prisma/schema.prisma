@@ -41,6 +41,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  spots         Spot[]
 }
 
 model VerificationToken {
@@ -49,4 +50,14 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Spot {
+  id          String @id @default(cuid())
+  title       String
+  description String
+  image_url   String
+
+  author   User?   @relation(fields: [authorId], references: [id])
+  authorId String?
 }
