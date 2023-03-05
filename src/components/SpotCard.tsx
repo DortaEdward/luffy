@@ -7,20 +7,24 @@ import {
   FiBookmark,
   FiMoreHorizontal,
 } from "react-icons/fi";
-const SpotCard = () => {
+
+
+
+
+const SpotCard = ({spot}:any) => {
   return (
     <div className="w-[360px] rounded-md bg-gray-400 bg-opacity-10 bg-clip-padding p-2 text-gray-200 shadow-2xl backdrop-filter">
       <div className="my-2 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Image
-            src={img}
+            src={spot.author.image}
             alt={"Author"}
             width={36}
             height={36}
             className="h-[40px] w-[40px] rounded-full"
           />
           <div className="leading-[1.2]">
-            <p className="font-medium">Aaron Brimhall</p>
+            <p className="font-medium">{spot.author.name}</p>
             <p className="text-[0.8rem]">Aug 30, 2022</p>
           </div>
         </div>
@@ -29,10 +33,12 @@ const SpotCard = () => {
         </div>
       </div>
       <div className="mx-auto w-[340px]">
-        <Image
-          src={img}
+        <img
+          src={spot.image_url}
           alt={"picture of the city"}
-          className="h-full w-full object-cover"
+          className="w-full object-cover aspect-square"
+          width={50}
+          height={50}
         />
       </div>
       <div className="my-2 flex items-center justify-between">
@@ -52,13 +58,11 @@ const SpotCard = () => {
           <FiMoreHorizontal size={24} />
         </div>
       </div>
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-2">
         <p className="leading-[1.4] text-gray-300">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis
-          harum temporibus corporis veritatis laborum atque aspernatur nihil
-          porro.
+          {spot.description}
         </p>
-        <p>Location</p>
+        <p>{spot.location}</p>
       </div>
     </div>
   );

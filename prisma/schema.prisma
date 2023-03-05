@@ -60,6 +60,7 @@ model Spot {
   location    String
   cords       String?
   image_public_id String
+  mark_for_deletion Boolean
 
   author    User?    @relation(fields: [authorId], references: [id])
   authorId  String?

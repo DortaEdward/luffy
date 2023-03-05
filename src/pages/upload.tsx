@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { trpc } from "../utils/trpc";
-import Axios from "axios";
 
 const Upload = () => {
   // form state

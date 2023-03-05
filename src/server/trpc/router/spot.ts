@@ -23,6 +23,7 @@ export const spotRouter = router({
         image_url: input.image_url,
         location: input.location,
         image_public_id: input.image_public_id,
+        mark_for_deletion: false,
         author: {
           connect: {
             id: authorId
@@ -30,5 +31,22 @@ export const spotRouter = router({
         }
       }
     })
+  }),
+  getSpots: publicProcedure.query(({ctx}) => {
+    const { prisma } = ctx;
+    return prisma.spot.findMany({
+      orderBy:{
+        createdAt:'desc'
+      },
+      include:{
+        author: {
+          select:{
+            id:true,
+            name: true,
+            image: true
+          }
+        },
+      }
+    });
   })
 });

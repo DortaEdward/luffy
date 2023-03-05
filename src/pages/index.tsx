@@ -5,7 +5,14 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import SpotCard from "../components/SpotCard";
 import { trpc } from "../utils/trpc";
 
+import SpotContainer from "../components/SpotContainer";
+
 const Home: NextPage = () => {
+
+  const {data, isLoading, error} = trpc.spot.getSpots.useQuery();
+
+  console.log(data);
+
   return (
     <>
       <Head>
@@ -14,7 +21,11 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex items-center flex-col">
-      <SpotCard />
+        {
+          isLoading
+          ? <>Loading</>
+          :<SpotContainer spots={data} />
+        }
       <button onClick={() => signIn()}>Sign In</button>
       </main>
     </>
