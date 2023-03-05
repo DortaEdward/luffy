@@ -1,51 +1,48 @@
 import { useState, useEffect } from "react";
-import { storage } from "../firebase/config";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import Image from "next/image";
 import { trpc } from "../utils/trpc";
-const Upload = () => {
-  const [image, setImage] = useState<File>();
-  const [preview, setPreview] = useState<string>();
-  const [error, setError] = useState<string | null>(null);
+import Axios from "axios";
 
+const Upload = () => {
+  // form state
+  const [image, setImage] = useState<File>();
   const [description, setDescription] = useState<string>();
   const [location, setLocation] = useState<string>();
-
+  const [preview, setPreview] = useState<string>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [imageUrl, setImageUrl] = useState<string>();
+  const [error, setError] = useState<string | null>(null);
   const fileTypes = ["image/png", "image/jpeg"];
+
+  // action state
+
+  const uploadImage = async () => {
+    if (!image) return;
+    const formData = new FormData();
+    formData.append("file", image);
+    formData.append("upload_preset", "recur_storage");
+    const api = `https://api.cloudinary.com/v1_1/dtvnjz5xc/image/upload`;
+    const res = await fetch(api, {
+      method: "POST",
+      body: formData,
+    });
+    const json = await res.json();
+    return json;
+  };
 
   const { mutateAsync } = trpc.spot.create.useMutation();
 
-  function imageUpload(image: File): void {
-    console.log("Starting firebase");
-    const storageRef = ref(storage, `${image.name}`);
-    setIsLoading(true);
-    uploadBytes(storageRef, image).then(() => {
-      getDownloadURL(storageRef).then((url) => {
-        setIsLoading(false);
-        setImageUrl(url);
-      });
-    });
-  }
-
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    console.log("Starting");
     if (!image || !description || !location) return;
-    console.log("After check");
     try {
-      await imageUpload(image);
-      if (!imageUrl) return;
-      console.log({
-        description: description,
-        image_url: imageUrl,
-        location: location,
-      });
+      // upload image
+      const {url, public_id} = await uploadImage();
+      if (!url) return;
       await mutateAsync({
         description: description,
-        image_url: imageUrl,
+        image_url: url,
         location: location,
+        image_public_id:public_id
       });
       console.log("Created");
     } catch (error: any) {

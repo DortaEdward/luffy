@@ -59,6 +59,7 @@ model Spot {
   image_url   String
   location    String
   cords       String?
+  image_public_id String
 
   author    User?    @relation(fields: [authorId], references: [id])
   authorId  String?

@@ -13,6 +13,7 @@ export const spotRouter = router({
     location: z.string({
       required_error: 'Location is needed'
     }),
+    image_public_id: z.string()
   })).mutation(({ input, ctx }) => {
     const { prisma, session } = ctx;
     const authorId = session.user.id;
@@ -21,6 +22,7 @@ export const spotRouter = router({
         description: input.description,
         image_url: input.image_url,
         location: input.location,
+        image_public_id: input.image_public_id,
         author: {
           connect: {
             id: authorId
