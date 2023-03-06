@@ -7,7 +7,7 @@ interface Props {
 const Container: React.FC<Props> = ({ children }) => {
   const router = useRouter();
   return (
-    <div className="min-w-screen relative h-full min-h-screen bg-neutral-800">
+    <div className="min-w-screen relative h-full min-h-screen bg-neutral-900">
       {children}
     </div>
   );

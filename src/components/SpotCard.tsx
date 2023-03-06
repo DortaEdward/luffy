@@ -1,4 +1,4 @@
-import img from "../img.jpg";
+/* eslint-disable @next/next/no-img-element */
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -12,9 +12,17 @@ import {
 
 
 
+
 const SpotCard = ({spot}:any) => {
+
+
+  const copyUrl = async (url: string) => {
+    await navigator.clipboard.writeText(url);
+    // need a visual to show user that url has been copied
+  }
+
   return (
-    <div className="w-[360px] rounded-md bg-gray-400 bg-opacity-10 bg-clip-padding p-2 text-gray-200 shadow-2xl backdrop-filter">
+    <div className="w-[320px] rounded-md bg-gray-400 bg-opacity-10 bg-clip-padding px-5 py-2 text-gray-200 shadow-2xl backdrop-filter">
       <div className="my-2 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Image
@@ -33,37 +41,37 @@ const SpotCard = ({spot}:any) => {
           <FiHeart size={28} className="stroke-2" />
         </div>
       </div>
-      <div className="mx-auto w-[340px]">
+      <div className="w-full flex items-center justify-center">
         <img
           src={spot.image_url}
           alt={"picture of the city"}
-          className="w-full object-cover aspect-square"
+          className="w-[350px] object-cover aspect-square"
           width={50}
           height={50}
         />
       </div>
-      <div className="my-2 flex items-center justify-between">
+      <div className="mt-2 mb-1 flex items-center justify-between">
         <div className="flex gap-4">
           <div className="flex items-center gap-1">
-            <p className="font-light">52</p>
-            <FiMessageSquare size={24} className="fill-gray-200 stroke-none" />
+            <p className="font-light text-xs">{0}</p>
+            <FiMessageSquare size={20} className="fill-gray-200 stroke-none" />
           </div>
           <div className="flex items-center gap-1">
-            <p className="font-light">52</p>
-            <FiHeart size={24} className="fill-gray-200 stroke-none" />
+            <p className="font-light text-xs">0</p>
+            <FiHeart size={20} className="fill-gray-200 stroke-none" />
           </div>
         </div>
         <div className="flex gap-3">
-          <FiSend size={24} className="fill-gray-200 stroke-none" />
-          <FiBookmark size={24} className="fill-gray-200 stroke-none" />
-          <FiMoreHorizontal size={24} />
+          <FiSend onClick={() => copyUrl(`http://localhost:3000/spots/${spot.id}`)} size={20} className="fill-gray-200 stroke-none" />
+          <FiBookmark size={20} className="fill-gray-200 stroke-none" />
+          <FiMoreHorizontal size={20} />
         </div>
       </div>
-      <div className="flex flex-col gap-2">
-        <p className="leading-[1.4] text-gray-300">
+      <div className="flex flex-col gap-1">
+        <p className="leading-[1.4] text-sm text-gray-300">
           {spot.description}
         </p>
-        <p>{spot.location}</p>
+        <p className="text-xs">{spot.location}</p>
       </div>
     </div>
   );

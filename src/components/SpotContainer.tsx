@@ -1,9 +1,9 @@
 import SpotCard from "./SpotCard";
 
 type Author = {
-  id:string;
-  image:string;
-  name:string;
+  id: string;
+  image: string;
+  name: string;
 };
 
 type Spot = {
@@ -20,20 +20,22 @@ type Spot = {
 };
 
 type Props = {
-  spots: Spot[],
-}
+  spots: Spot[];
+};
 
-const SpotContainer = ({spots}: any) => {
+const SpotContainer = ({ spots }: any) => {
   return (
-  <div className="flex flex-col flex-wrap justify-center sm:flex-row gap-4 p-6">
-    {
-      spots.map((spot: any) => {
-        return(
-          <SpotCard key={spot.id} spot={spot} />
-        )
-      })
-    }
-  </div>)
-}
+    <div className="gap-6 p-6 grid lg:grid-cols-3 md:grid-cols-2">
+      {spots.map((spot: any) => {
+        return (
+          <>
+            <SpotCard key={spot.id} spot={spot} />
+            <SpotCard key={spot.id + "1"} spot={spot} />
+          </>
+        );
+      })}
+    </div>
+  );
+};
 
 export default SpotContainer;

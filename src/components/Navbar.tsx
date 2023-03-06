@@ -1,4 +1,4 @@
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import { FiMenu, FiX } from "react-icons/fi";
 import Link from "next/link";
@@ -8,22 +8,27 @@ import { signIn } from "next-auth/react";
 const Navbar = () => {
   const { data: session } = useSession();
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const prevScrollY = useRef(0);
 
-  const handleClick = (e: any) => {
-    if (e.target.classList.contains('hamburger')) {
-      alert('Clicking')
-      setIsOpen(false);
-    }
-  }
-
-  // https://stackoverflow.com/questions/74739770/react-js-close-modal-on-scroll
+  useEffect(() => {
+    // update to check if navbar still in view
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (prevScrollY.current !== currentScrollY) {
+        setIsOpen(false);
+      }
+      prevScrollY.current = currentScrollY;
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isOpen]);
 
   const linkStyles =
     "h-full px-1 font-medium text-base flex items-center justify-center hover:border-t-2 hover:border-sky-600 border-t-transparent transition-all duration-200 ease-in-out";
   const linkMobileStyles =
     "h-full px-2 py-4 font-medium text-base flex items-center justify-center hover:border-x-4 hover:border-sky-600 border-x-transparent transition-all duration-200 ease-in-out";
   return (
-    <div className="flex h-16 w-full items-center justify-between px-6 text-gray-300 shadow-lg">
+    <div className="sticky top-0 flex h-16 w-full items-center justify-between bg-neutral-800 px-6 text-gray-300 shadow-lg">
       {/* Left */}
       <div className="flex">
         {/* Logo */}
@@ -118,14 +123,29 @@ const Navbar = () => {
                 src={session.user?.image as string}
                 alt={`Image of ${session.user?.name}`}
               />
+              <button
+                type="button"
+                className="rounded bg-sky-600 px-4 py-1 font-semibold"
+                onClick={() => {
+                  signOut();
+                }}
+              >
+                Sign Out
+              </button>
             </div>
           ) : (
             <div>
-              <button type="button" className="bg-sky-600 px-4 py-1 rounded font-semibold" onClick={() => {signIn()}}>Sign In</button>
+              <button
+                type="button"
+                className="rounded bg-sky-600 px-4 py-1 font-semibold"
+                onClick={() => {
+                  signIn();
+                }}
+              >
+                Sign In
+              </button>
             </div>
           )}
-
-          {/* Menu to log out */}
         </div>
       </div>
     </div>
