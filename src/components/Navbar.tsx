@@ -47,6 +47,9 @@ const Navbar = () => {
               <Link href="/">Home</Link>
             </li>
             <li className={linkStyles}>
+              <Link href="/upload">Upload</Link>
+            </li>
+            <li className={linkStyles}>
               <Link href="/explore">Explore</Link>
             </li>
             <li className={linkStyles}>
@@ -92,10 +95,13 @@ const Navbar = () => {
           )}
           {isOpen ? (
             // ========== //
-            <div className="hamburger absolute right-[-24px] top-12 w-screen bg-neutral-800">
+            <div className="hamburger absolute right-[-24px] top-11 w-screen bg-neutral-800">
               <ul className="flex flex-col gap-4">
                 <Link href="/">
                   <li className={linkMobileStyles}>Home</li>
+                </Link>
+                <Link href="/upload">
+                  <li className={linkMobileStyles}>Upload</li>
                 </Link>
                 <Link href="/explore">
                   <li className={linkMobileStyles}>Explore</li>

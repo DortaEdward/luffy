@@ -8,7 +8,6 @@ const Upload = () => {
   const [description, setDescription] = useState<string>();
   const [location, setLocation] = useState<string>();
   const [preview, setPreview] = useState<string>();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const fileTypes = ["image/png", "image/jpeg"];
 
@@ -35,13 +34,13 @@ const Upload = () => {
     if (!image || !description || !location) return;
     try {
       // upload image
-      const {url, public_id} = await uploadImage();
+      const { url, public_id } = await uploadImage();
       if (!url) return;
       await mutateAsync({
         description: description,
         image_url: url,
         location: location,
-        image_public_id:public_id
+        image_public_id: public_id,
       });
       console.log("Created");
     } catch (error: any) {
@@ -72,43 +71,54 @@ const Upload = () => {
   }, [image]);
 
   return (
-    <div>
-      <h1>Upload</h1>
-      {preview && (
-        <Image
-          width={324}
-          height={226}
-          className="h-[226px] w-[324px] object-cover"
-          src={preview}
-          alt="image user is uploading"
-        />
-      )}
-      {isLoading ? (
-        <>Loading...</>
-      ) : (
-        <form onSubmit={(e) => handleSubmit(e)}>
+    <div className="flex w-full h-full flex-col items-center justify-center gap-4 text-gray-200 outline">
+      <h1 className="text-4xl">Upload</h1>
+      <div className="flex gap-2 flex-col md:flex-row">
+        {preview ? (
+          <Image
+            width={340}
+            height={340}
+            className="h-[340px] w-[340px] object-cover"
+            src={preview}
+            alt="image user is uploading"
+          />
+        ) : (
+          <div className="h-[350px] w-[350px] border">Image Placeholder</div>
+        )}
+        <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col gap-2">
           {error && <p>{error}</p>}
           <input
             onChange={handleImageChange}
             type="file"
             name="image"
             id="image__upload"
+            className={image ? `select-none` : "flex"}
+            required
           />
-          <textarea
-            name="description"
-            id="spot__description"
-            onChange={(e) => setDescription(e.target.value)}
-          />
+          <div className="h-36 md:h-48 w-full">
+            <textarea
+              name="description"
+              id="spot__description"
+              className="h-full w-full resize-none p-2 text-neutral-900 outline-none"
+              placeholder="Enter Description"
+              onChange={(e) => setDescription(e.target.value)}
+              required
+            />
+          </div>
           <input
             type="text"
             name="location"
             id="spot__location"
             placeholder="Enter Location"
+            className="p-2 outline-none"
             onChange={(e) => setLocation(e.target.value)}
+            required
           />
-          <button type="submit">Upload</button>
+          <button type="submit" className="bg-sky-600 py-1">
+            Upload
+          </button>
         </form>
-      )}
+      </div>
     </div>
   );
 };
