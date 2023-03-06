@@ -25,7 +25,7 @@ type Props = {
 
 const SpotContainer = ({spots}: any) => {
   return (
-  <div className="flex flex-col sm:flex-row gap-4">
+  <div className="flex flex-col flex-wrap justify-center sm:flex-row gap-4 p-6">
     {
       spots.map((spot: any) => {
         return(

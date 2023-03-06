@@ -1,5 +1,6 @@
 import img from "../img.jpg";
 import Image from "next/image";
+import Link from "next/link";
 import {
   FiHeart,
   FiMessageSquare,
@@ -24,7 +25,7 @@ const SpotCard = ({spot}:any) => {
             className="h-[40px] w-[40px] rounded-full"
           />
           <div className="leading-[1.2]">
-            <p className="font-medium">{spot.author.name}</p>
+            <Link href={`/user/${spot.authorId}`} className="font-medium">{spot.author.name}</Link>
             <p className="text-[0.8rem]">Aug 30, 2022</p>
           </div>
         </div>

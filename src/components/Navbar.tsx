@@ -1,27 +1,132 @@
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { FiMenu } from "react-icons/fi";
+import { FiMenu, FiX } from "react-icons/fi";
 import Link from "next/link";
+import { useEffect, useState, useRef } from "react";
+import { signIn } from "next-auth/react";
+
 const Navbar = () => {
   const { data: session } = useSession();
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const handleClick = (e: any) => {
+    if (e.target.classList.contains('hamburger')) {
+      alert('Clicking')
+      setIsOpen(false);
+    }
+  }
+
+  // https://stackoverflow.com/questions/74739770/react-js-close-modal-on-scroll
+
+  const linkStyles =
+    "h-full px-1 font-medium text-base flex items-center justify-center hover:border-t-2 hover:border-sky-600 border-t-transparent transition-all duration-200 ease-in-out";
+  const linkMobileStyles =
+    "h-full px-2 py-4 font-medium text-base flex items-center justify-center hover:border-x-4 hover:border-sky-600 border-x-transparent transition-all duration-200 ease-in-out";
   return (
-    <div className="sticky top-0 z-50 p-4">
-      <div className="flex h-full w-full items-center justify-between sm:hidden">
-        <div className="flex gap-2">
-          <FiMenu size={28} className="cursor-pointer text-gray-200" />
-          <Link href={"/"}>
-            <div className="text-2xl text-gray-200">Recur</div>
-          </Link>
+    <div className="flex h-16 w-full items-center justify-between px-6 text-gray-300 shadow-lg">
+      {/* Left */}
+      <div className="flex">
+        {/* Logo */}
+        <div className="flex items-center">
+          <div className="ml-1 text-2xl">Recur</div>
         </div>
-        {session && (
-          <Image
-            className="rounded-full"
-            width={28}
-            height={28}
-            src={session.user?.image as string}
-            alt={`Image of ${session.user?.name}`}
-          />
-        )}
+      </div>
+      {/* Middle */}
+      <div className="hidden h-full flex-[2] justify-center sm:flex ">
+        {/* Navlinks Container */}
+        <div className="flex h-full items-center">
+          {/* Nav Wrapper */}
+          <ul className="flex h-full w-full items-center justify-center gap-2 ">
+            {/* Navlinks */}
+            <li className={linkStyles}>
+              <Link href="/">Home</Link>
+            </li>
+            <li className={linkStyles}>
+              <Link href="/explore">Explore</Link>
+            </li>
+            <li className={linkStyles}>
+              <Link href="/about">About</Link>
+            </li>
+            <li className={linkStyles}>
+              <Link href="/contact">Contact</Link>
+            </li>
+          </ul>
+        </div>
+      </div>
+      {/* Right Side */}
+      <div className="flex">
+        <div className="relative flex items-center gap-4 sm:hidden">
+          {session ? (
+            <div className="flex items-center gap-2">
+              <p>Welcome, {session.user?.name}</p>
+              <Image
+                className="rounded-full"
+                width={32}
+                height={32}
+                src={session.user?.image as string}
+                alt={`Image of ${session.user?.name}`}
+              />
+            </div>
+          ) : (
+            <></>
+          )}
+          {isOpen ? (
+            <FiX
+              size={28}
+              className="cursor-pointer text-gray-200"
+              onClick={() => setIsOpen(false)}
+            />
+          ) : (
+            <div>
+              <FiMenu
+                size={28}
+                className="cursor-pointer text-gray-200"
+                onClick={() => setIsOpen(true)}
+              />
+            </div>
+          )}
+          {isOpen ? (
+            // ========== //
+            <div className="hamburger absolute right-[-24px] top-12 w-screen bg-neutral-800">
+              <ul className="flex flex-col gap-4">
+                <Link href="/">
+                  <li className={linkMobileStyles}>Home</li>
+                </Link>
+                <Link href="/explore">
+                  <li className={linkMobileStyles}>Explore</li>
+                </Link>
+                <Link href="/about">
+                  <li className={linkMobileStyles}>About</li>
+                </Link>
+                <Link href="/contact">
+                  <li className={linkMobileStyles}>Contact</li>
+                </Link>
+              </ul>
+            </div>
+          ) : (
+            <></>
+          )}
+        </div>
+        <div className="hidden sm:flex">
+          {session ? (
+            <div className="flex items-center gap-2">
+              <p>Welcome, {session.user?.name}</p>
+              <Image
+                className="rounded-full"
+                width={32}
+                height={32}
+                src={session.user?.image as string}
+                alt={`Image of ${session.user?.name}`}
+              />
+            </div>
+          ) : (
+            <div>
+              <button type="button" className="bg-sky-600 px-4 py-1 rounded font-semibold" onClick={() => {signIn()}}>Sign In</button>
+            </div>
+          )}
+
+          {/* Menu to log out */}
+        </div>
       </div>
     </div>
   );
