@@ -32,9 +32,17 @@ export const spotRouter = router({
       }
     })
   }),
-  getSpots: publicProcedure.query(({ctx}) => {
+  getSpots: publicProcedure
+  .input(z.object({
+    cursor: z.string().nullish(),
+    limit: z.number().min(1).max(100).default(10)
+  }))
+  .query(({ctx, input}) => {
     const { prisma } = ctx;
+    const {limit, cursor} = input;
+
     return prisma.spot.findMany({
+      take:limit + 1,
       orderBy:{
         createdAt:'desc'
       },

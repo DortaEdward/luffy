@@ -66,7 +66,7 @@ const Navbar = () => {
         <div className="relative flex items-center gap-4 sm:hidden">
           {session ? (
             <div className="flex items-center gap-2">
-              <p>Welcome, {session.user?.name}</p>
+              <Link href={`/profile/${session.user?.name}`}>{session.user?.name}</Link>
               <Image
                 className="rounded-full"
                 width={32}
@@ -121,7 +121,7 @@ const Navbar = () => {
         <div className="hidden sm:flex">
           {session ? (
             <div className="flex items-center gap-2">
-              <p>Welcome, {session.user?.name}</p>
+              <Link href={`/profile/${session.user?.name}`}>{session.user?.name}</Link>
               <Image
                 className="rounded-full"
                 width={32}
