@@ -1,6 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import Image from "next/image";
 import Link from "next/link";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import updateLocal from "dayjs/plugin/updateLocale";
 import {
   FiHeart,
   FiMessageSquare,
@@ -8,6 +11,27 @@ import {
   FiBookmark,
   FiMoreHorizontal,
 } from "react-icons/fi";
+
+dayjs.extend(relativeTime);
+dayjs.extend(updateLocal);
+
+dayjs.updateLocale("en", {
+  relativeTime: {
+    future: "in %s",
+    past: "%s",
+    s: "1m",
+    m: "1m",
+    mm: "%dm",
+    h: "1h",
+    hh: "%dh",
+    d: "1d",
+    dd: "%dd",
+    M: "1M",
+    MM: "%dM",
+    y: "1y",
+    yy: "%dy",
+  },
+});
 
 const SpotCard = ({ spot }: any) => {
   const copyUrl = async (url: string) => {
@@ -31,7 +55,7 @@ const SpotCard = ({ spot }: any) => {
             <Link href={`/user/${spot.authorId}`} className="font-medium">
               {spot.author.name}
             </Link>
-            <p className="text-[0.8rem]">Aug 30, 2022</p>
+            <p className="text-[0.8rem]">{dayjs(spot.createdAt).fromNow()}</p>
           </div>
         </div>
         <div>
@@ -65,7 +89,7 @@ const SpotCard = ({ spot }: any) => {
           <FiSend
             onClick={() => copyUrl(`http://localhost:3000/spots/${spot.id}`)}
             size={20}
-            className="fill-gray-200 stroke-none cursor-pointer"
+            className="cursor-pointer fill-gray-200 stroke-none"
           />
           <FiBookmark size={20} className="fill-gray-200 stroke-none" />
           <FiMoreHorizontal size={20} />
