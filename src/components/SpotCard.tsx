@@ -11,6 +11,7 @@ import {
   FiBookmark,
   FiMoreHorizontal,
 } from "react-icons/fi";
+import { RouterOutputs, trpc } from "../utils/trpc";
 
 dayjs.extend(relativeTime);
 dayjs.extend(updateLocal);
@@ -34,6 +35,18 @@ dayjs.updateLocale("en", {
 });
 
 const SpotCard = ({ spot }: any) => {
+  const utils = trpc.useContext();
+  const liked = spot.likes.length > 0;
+  const like = trpc.spot.likeSpot.useMutation({
+    onSuccess: (data) => {
+      utils.spot.getSpots.invalidate();
+    },
+  });
+  const unLike = trpc.spot.unLikeSpot.useMutation({
+    onSuccess: (data) => {
+      utils.spot.getSpots.invalidate();
+    },
+  });
   const copyUrl = async (url: string) => {
     await navigator.clipboard.writeText(url);
     // need a visual to show user that url has been copied
@@ -59,7 +72,20 @@ const SpotCard = ({ spot }: any) => {
           </div>
         </div>
         <div>
-          <FiHeart size={28} className="stroke-2" />
+          {/* Fill if liked by user */}
+          {liked ? (
+            <FiHeart
+              size={28}
+              className="fill-gray-200 stroke-2"
+              onClick={async () => unLike.mutateAsync({ spotId: spot.id })}
+            />
+          ) : (
+            <FiHeart
+              size={28}
+              className="stroke-2"
+              onClick={async () => like.mutateAsync({ spotId: spot.id })}
+            />
+          )}
         </div>
       </div>
       <Link

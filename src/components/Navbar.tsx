@@ -33,7 +33,7 @@ const Navbar = () => {
       <div className="flex">
         {/* Logo */}
         <div className="flex items-center">
-          <div className="ml-1 text-2xl">Recur</div>
+          <Link href={'/'} className="ml-1 text-2xl">Recur</Link>
         </div>
       </div>
       {/* Middle */}
