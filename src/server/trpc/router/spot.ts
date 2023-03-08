@@ -66,6 +66,11 @@ export const spotRouter = router({
               image: true
             }
           },
+          _count: {
+            select: {
+              likes: true,
+            },
+          },
         }
       });
     }),

@@ -38,6 +38,8 @@ const SpotCard = ({ spot }: any) => {
   const utils = trpc.useContext();
   const totalLikes = spot.likes.length;
   const liked = totalLikes > 0;
+  const count = spot._count.likes;
+  console.log(spot);
   const like = trpc.spot.likeSpot.useMutation({
     onSuccess: () => {
       utils.spot.getSpots.invalidate();
@@ -104,11 +106,7 @@ const SpotCard = ({ spot }: any) => {
       <div className="mt-2 mb-1 flex items-center justify-between">
         <div className="flex gap-4">
           <div className="flex items-center gap-1">
-            <p className="text-xs font-light">0</p>
-            <FiMessageSquare size={20} className="fill-gray-200 stroke-none" />
-          </div>
-          <div className="flex items-center gap-1">
-            <p className="text-xs font-light">{totalLikes}</p>
+            <p className="text-xs font-light">{count}</p>
             <FiHeart size={20} className="fill-gray-200 stroke-none" />
           </div>
         </div>
@@ -118,7 +116,7 @@ const SpotCard = ({ spot }: any) => {
             size={20}
             className="cursor-pointer fill-gray-200 stroke-none"
           />
-          <FiBookmark size={20} className="fill-gray-200 stroke-none" />
+          {/* <FiBookmark size={20} className="fill-gray-200 stroke-none cursor-pointer" /> */}
           <FiMoreHorizontal size={20} />
         </div>
       </div>

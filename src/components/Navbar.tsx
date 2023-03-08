@@ -52,9 +52,6 @@ const Navbar = () => {
               <Link href="/upload">Upload</Link>
             </li>
             <li className={linkStyles}>
-              <Link href="/explore">Explore</Link>
-            </li>
-            <li className={linkStyles}>
               <Link href="/about">About</Link>
             </li>
             <li className={linkStyles}>
@@ -107,9 +104,6 @@ const Navbar = () => {
                 <Link onClick={() => setIsOpen(false)} href="/upload">
                   <li className={linkMobileStyles}>Upload</li>
                 </Link>
-                <Link onClick={() => setIsOpen(false)} href="/explore">
-                  <li className={linkMobileStyles}>Explore</li>
-                </Link>
                 <Link onClick={() => setIsOpen(false)} href="/about">
                   <li className={linkMobileStyles}>About</li>
                 </Link>
@@ -118,11 +112,15 @@ const Navbar = () => {
                 </Link>
                 {session ? (
                   <div>
-                    <li className={linkMobileStyles} onClick={() => signOut()} >Sign Out</li>
+                    <li className={linkMobileStyles} onClick={() => signOut()}>
+                      Sign Out
+                    </li>
                   </div>
                 ) : (
                   <div>
-                    <li className={linkMobileStyles} onClick={() => signIn()}>Sign In</li>
+                    <li className={linkMobileStyles} onClick={() => signIn()}>
+                      Sign In
+                    </li>
                   </div>
                 )}
               </ul>

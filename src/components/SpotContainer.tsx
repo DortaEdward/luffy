@@ -11,7 +11,7 @@ const SpotContainer = ({ spots }: any) => {
       {spots.map((spot: any) => {
         return (
           <>
-            <SpotCard key={spot.id} spot={spot} />
+            <SpotCard key={spot.id + '1'} spot={spot} />
           </>
         );
       })}
