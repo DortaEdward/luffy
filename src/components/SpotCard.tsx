@@ -36,14 +36,15 @@ dayjs.updateLocale("en", {
 
 const SpotCard = ({ spot }: any) => {
   const utils = trpc.useContext();
-  const liked = spot.likes.length > 0;
+  const totalLikes = spot.likes.length;
+  const liked = totalLikes > 0;
   const like = trpc.spot.likeSpot.useMutation({
-    onSuccess: (data) => {
+    onSuccess: () => {
       utils.spot.getSpots.invalidate();
     },
   });
   const unLike = trpc.spot.unLikeSpot.useMutation({
-    onSuccess: (data) => {
+    onSuccess: () => {
       utils.spot.getSpots.invalidate();
     },
   });
@@ -103,11 +104,11 @@ const SpotCard = ({ spot }: any) => {
       <div className="mt-2 mb-1 flex items-center justify-between">
         <div className="flex gap-4">
           <div className="flex items-center gap-1">
-            <p className="text-xs font-light">{0}</p>
+            <p className="text-xs font-light">0</p>
             <FiMessageSquare size={20} className="fill-gray-200 stroke-none" />
           </div>
           <div className="flex items-center gap-1">
-            <p className="text-xs font-light">0</p>
+            <p className="text-xs font-light">{totalLikes}</p>
             <FiHeart size={20} className="fill-gray-200 stroke-none" />
           </div>
         </div>

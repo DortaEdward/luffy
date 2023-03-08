@@ -33,7 +33,9 @@ const Navbar = () => {
       <div className="flex">
         {/* Logo */}
         <div className="flex items-center">
-          <Link href={'/'} className="ml-1 text-2xl">Recur</Link>
+          <Link href={"/"} className="ml-1 text-2xl">
+            Recur
+          </Link>
         </div>
       </div>
       {/* Middle */}
@@ -66,7 +68,9 @@ const Navbar = () => {
         <div className="relative flex items-center gap-4 sm:hidden">
           {session ? (
             <div className="flex items-center gap-2">
-              <Link href={`/profile/${session.user?.name}`}>{session.user?.name}</Link>
+              <Link href={`/profile/${session.user?.name}`}>
+                {session.user?.name}
+              </Link>
               <Image
                 className="rounded-full"
                 width={32}
@@ -97,21 +101,30 @@ const Navbar = () => {
             // ========== //
             <div className="hamburger absolute right-[-24px] top-11 w-screen bg-neutral-800">
               <ul className="flex flex-col gap-4">
-                <Link href="/">
+                <Link onClick={() => setIsOpen(false)} href="/">
                   <li className={linkMobileStyles}>Home</li>
                 </Link>
-                <Link href="/upload">
+                <Link onClick={() => setIsOpen(false)} href="/upload">
                   <li className={linkMobileStyles}>Upload</li>
                 </Link>
-                <Link href="/explore">
+                <Link onClick={() => setIsOpen(false)} href="/explore">
                   <li className={linkMobileStyles}>Explore</li>
                 </Link>
-                <Link href="/about">
+                <Link onClick={() => setIsOpen(false)} href="/about">
                   <li className={linkMobileStyles}>About</li>
                 </Link>
-                <Link href="/contact">
+                <Link onClick={() => setIsOpen(false)} href="/contact">
                   <li className={linkMobileStyles}>Contact</li>
                 </Link>
+                {session ? (
+                  <div>
+                    <li className={linkMobileStyles} onClick={() => signOut()} >Sign Out</li>
+                  </div>
+                ) : (
+                  <div>
+                    <li className={linkMobileStyles} onClick={() => signIn()}>Sign In</li>
+                  </div>
+                )}
               </ul>
             </div>
           ) : (
@@ -121,7 +134,9 @@ const Navbar = () => {
         <div className="hidden sm:flex">
           {session ? (
             <div className="flex items-center gap-2">
-              <Link href={`/profile/${session.user?.name}`}>{session.user?.name}</Link>
+              <Link href={`/profile/${session.user?.name}`}>
+                {session.user?.name}
+              </Link>
               <Image
                 className="rounded-full"
                 width={32}

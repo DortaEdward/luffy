@@ -52,10 +52,10 @@ export const spotRouter = router({
         cursor: cursor ? { id: cursor } : undefined,
         include: {
           likes: {
-            where:{
+            where: {
               userId
             },
-            select:{
+            select: {
               userId: true
             }
           },
@@ -69,6 +69,31 @@ export const spotRouter = router({
         }
       });
     }),
+
+  exploreFeed: protectedProcedure.query(({ ctx }) => {
+    const { prisma, session } = ctx;
+    const userId = session?.user.id;
+    return prisma.spot.findMany({
+      orderBy: {
+        createdAt: 'desc'
+      },
+      where: {
+        authorId: {
+          not: userId
+        }
+      },
+      include: {
+        likes: true,
+        author: {
+          select: {
+            id: true,
+            name: true,
+            image: true
+          }
+        },
+      }
+    })
+  }),
 
   likeSpot: protectedProcedure
     .input(z.object({
